@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+    app:
+        build:
+            context: ./app
+            dockerfile: Dockerfile
+        ports:
+            - "8081:80"
+        volumes:
+            - "flask_app_volume:/src"
+        tty: true
+        container_name: python
+        restart: unless-stopped
+    web:
+        build:
+            context: ./web
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        volumes: 
+            - "web_content:/usr/share/nginx/html"
+        container_name: nginx
+        restart: unless-stopped
+volumes: 
+    flask_app_volume:
+        driver: local
+    web_content:
+        driver: local
